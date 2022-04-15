@@ -2,7 +2,7 @@ import os,sys,colorlib,platform,requests,json
 
 
 
-version = "6.9.3"
+version = "6.9.4"
 
 
 def helps():
@@ -44,11 +44,16 @@ prototype = {
         "platform":platform.uname(),
         "resolution":os.get_terminal_size,
     },
+    "document":{
+        "write":sys.stdout.write,
+        "clear":colorlib.consoles.clear(),
+        "#document":colorlib.consoles,
+        "file":"<stdin>"
+    },
     "print":print,
     "system":os.system,
     "about":abouts,
     "help":helps,
-    "locals":locals,
     "colorlib":colorlib,
     "__pyimport__":__import__,
     "__python__":eval,
@@ -74,7 +79,7 @@ prototype = {
         "ord":ord,
         "os":os,
         "sys":sys,
-        "range":range,
+        "range":lambda start,stop=0,step=1:list(range(int(str(start).replace("'","")),int(str(stop).replace("'","")),int(str(step).replace("'","")))),
     },
     "XMLHttpRequest":{
         "get":requests.get,

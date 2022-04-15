@@ -16,16 +16,27 @@ argv = sys.argv
 
 def res_dis(file,fl=__file__):
     ic = os.path.split(os.path.realpath(fl))[ 0 ]+"/"+file
-    return ic
+    return ic.replace("\\","/")
 class function:
     def include(url):
         try:
             context.execute(requests.get(str(url).replace("'","")).content.decode('utf-8'))
-            return True
-        except:
-            return False
+            return {
+                "no_error":True,
+                "error_name":"Not Found",
+                "error_message":"Not Found",
+                "error":Exception("Not Found"),
+            }
+        except BaseException as e:
+            return {
+                "no_error":False,
+                "error_name":e.__class__.__name__,
+                "error_message":str(e),
+                "error":e,
+            }
 
 class rv:
+    global prototypes
     def libs():
         liblist = []
         if os.path.exists(res_dis("libs")):
@@ -168,9 +179,13 @@ def run(code):
                 if temps >= str(code).count("}"):
                     temps -= str(code).count("}")
             elif "{" not in code and "}" and ":" not in code and "return" not in code:
-                colorlib.cprint(str(sys.exc_info()[0].__name__) +":"+ str(sys.exc_info()[1]) if sys.exc_info()[0] != JsException else str(sys.exc_info()[1]),"Red")
+                if str(sys.exc_info()[1]) != "":
+                    colorlib.cprint(str(sys.exc_info()[0].__name__) +":"+ str(sys.exc_info()[1]) if sys.exc_info()[0] != JsException else str(sys.exc_info()[1]),"Red")
+                else:
+                    colorlib.cprint(str(sys.exc_info()[0].__name__) if str(sys.exc_info()[0]) != JsException else str(sys.exc_info()[1]),"Red")
 prototypes.prototype["include"] = function.include
 prototypes.prototype["reload_modules"] = lambda: {"site-packages":rv.libs(),"standard-packages":rv.stdlibs()}
+
 context = js2py.EvalJs(prototypes.prototype)
 loads = ""
 temps = 0
