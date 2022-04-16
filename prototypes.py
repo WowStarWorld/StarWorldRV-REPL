@@ -2,7 +2,7 @@ import os,sys,colorlib,platform,requests,json
 
 
 
-version = "6.9.5"
+version = "6.9.6"
 
 
 def helps():
@@ -46,15 +46,13 @@ prototype = {
     },
     "document":{
         "write":sys.stdout.write,
-        "clear":colorlib.consoles.clear(),
+        "clear":colorlib.consoles.clear,
         "#document":colorlib.consoles,
-        "file":"<stdin>"
     },
     "print":print,
     "system":os.system,
     "about":abouts,
     "help":helps,
-    "colorlib":colorlib,
     "__pyimport__":__import__,
     "__python__":eval,
     "__pyexec__":exec,
@@ -68,17 +66,7 @@ prototype = {
         "fopen":open,
     },
     "wrapper":{
-        "dir":dir,
-        "type":type,
-        "Exception":Exception,
-        "BaseException":BaseException,
         "pass":None,
-        "platform":platform,
-        "json_parser":json,
-        "chr":chr,
-        "ord":ord,
-        "os":os,
-        "sys":sys,
         "range":lambda start,stop=0,step=1:list(range(int(str(start).replace("'","")),int(str(stop).replace("'","")),int(str(step).replace("'","")))),
     },
     "XMLHttpRequest":{

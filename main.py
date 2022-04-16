@@ -13,7 +13,7 @@ import readline
 
 version = prototypes.version
 argv = sys.argv
-keywords = ["pyimport","break","case","catch","const","else","enum","eval","extends","finally","for","function","if","in","instanceof","let","new","return","super","switch","throw","try","typeof","var","void","while","with","yield"]
+keywords = ["pyimport","break","case","catch","const","delete","else","enum","eval","extends","finally","for","function","if","in","instanceof","let","new","return","super","switch","throw","try","typeof","var","void","while","with","yield"]
 def res_dis(file,fl=__file__):
     ic = os.path.split(os.path.realpath(fl))[ 0 ]+"/"+file
     return ic.replace("\\","/")
