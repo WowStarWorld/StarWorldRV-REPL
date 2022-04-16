@@ -3,7 +3,7 @@ import json
 from js2py.base import JsObjectWrapper
 
 consoles = rich.console.Console()
-def cprint(text:str,color:str,end:str="\n"):
+def cprint(text,color:str,end:str="\n"):
     self = consoles
     try:
         dicts = text.to_dict()
@@ -19,7 +19,10 @@ def cprint(text:str,color:str,end:str="\n"):
                 jsons[key] = f"\'[bold yellow]{str(value)}[/bold yellow]\'"
             else:
                 jsons[key] = f"{str(value)}"
-        self.print(f"[{color.lower()}]{json.dumps(jsons,indent=2)}[/{color.lower()}]".replace("\\\\\\\\","\\\\").replace("\\\"","").replace("\"","").replace("\'",'"'),end=end)
+        if jsons == {}:
+            self.print(text)
+        else:
+            self.print(f"[{color.lower()}]{json.dumps(jsons,indent=2)}[/{color.lower()}]".replace("\\\\\\\\","\\\\").replace("\\\"","").replace("\"","").replace("\'",'"'),end=end)
     except :
         self.print(f"[{color.lower()}]{text}[/{color.lower()}]",end=end)
 def cinput(text:str,color:str):
