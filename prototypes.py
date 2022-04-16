@@ -1,8 +1,8 @@
-import os,sys,colorlib,platform,requests,json
+import os,sys,colorlib,platform,requests
 
 
 
-version = "6.9.6"
+version = "6.9.7"
 
 
 def helps():
@@ -37,6 +37,7 @@ Copyright © 2019-2021 StarWorld
         ""","Yellow")
 
 
+
 prototype = {
     "window":{
         "title":"RV",
@@ -62,17 +63,14 @@ prototype = {
         "raw_input":sys.stdin,
         "raw_output":sys.stdout,
     },
-    "fstream":{
-        "fopen":open,
-    },
+    "fopen":open,
     "wrapper":{
         "pass":None,
         "range":lambda start,stop=0,step=1:list(range(int(str(start).replace("'","")),int(str(stop).replace("'","")),int(str(step).replace("'","")))),
     },
     "XMLHttpRequest":{
-        "get":requests.get,
-        "post":requests.post,
-        "wrapper":requests,
+        "get":lambda url,data,headers:requests.get(url=str(url).replace("'",""),data=data,headers=headers),
+        "post":lambda url,data,headers:requests.post(url=str(url).replace("'",""),data=data,headers=headers),
     },
 }
 
