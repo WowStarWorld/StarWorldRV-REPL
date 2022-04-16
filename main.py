@@ -22,17 +22,17 @@ class function:
         try:
             context.execute(requests.get(str(url).replace("'","")).content.decode('utf-8'))
             return {
-                "no_error":True,
+                "error":False,
                 "error_name":"Not Found",
                 "error_message":"Not Found",
-                "error":Exception("Not Found"),
+                "error_type":Exception,
             }
         except BaseException as e:
             return {
-                "no_error":False,
+                "error":True,
                 "error_name":e.__class__.__name__,
                 "error_message":str(e),
-                "error":e,
+                "error_type":e.__class__,
             }
 
 class rv:
