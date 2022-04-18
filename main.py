@@ -108,23 +108,23 @@ class rv:
 def run(code):
     global loads
     global temps
-    if code == ".about":
+    if code.strip().split(" ")[0] == ".about":
         prototypes.abouts()
-    elif code == ".help":
+    elif code.strip().split(" ")[0] == ".help":
         prototypes.helps()
-    elif code == ".exit":
+    elif code.strip().split(" ")[0] == ".exit":
         sys.exit(0)
-    elif code == ".cls":
+    elif code.strip().split(" ")[0] == ".cls":
         colorlib.consoles.clear()
         information()
-    elif code == ".debug":
+    elif code.strip().split(" ")[0] == ".debug":
         try:
             colorlib.cprint(json.dumps(js2py.parse_js(loads),indent=2),"grey")
         except:
             colorlib.cprint(sys.exc_info()[1],"Red")
             colorlib.cprint("Error Code:","red")
             colorlib.cprint(loads,"yellow")
-    elif code == ".editor":
+    elif code.strip().split(" ")[0] == ".editor":
         colorlib.consoles.clear()
         colorlib.cprint("~[/blue] // Entering editor mode (^D to finish, ^C to cancel)[blue] ","Blue")
         cms = "// Entering editor mode (^D to finish, ^C to cancel)\n"
@@ -146,7 +146,7 @@ def run(code):
         information()
         
 
-    elif code == ".load":
+    elif code.strip().split(" ")[0] == ".load":
         try:
             context.execute(loads)
         except:
@@ -157,9 +157,9 @@ def run(code):
             colorlib.cprint(info,"Red")
             colorlib.cprint("Error Code:","red")
             colorlib.cprint(loads,"yellow")
-    elif code == ".clear":
+    elif code.strip().split(" ")[0] == ".clear":
         loads = ""
-    elif code == ".show":
+    elif code.strip().split(" ")[0] == ".show":
         colorlib.consoles.print(syntax.Syntax(loads, "javascript", theme="vim", line_numbers=True))
         
     elif len(code) >=1 and code[0] == ".":

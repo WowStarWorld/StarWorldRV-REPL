@@ -3,7 +3,7 @@ import datetime
 from time import sleep
 
 
-version = "6.7.2"
+version = "6.7.3"
 
 
 def helps():
