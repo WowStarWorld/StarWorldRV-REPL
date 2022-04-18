@@ -179,21 +179,21 @@ def run(code):
                 if temps["braces"] >= str(code).count("}"):
                     temps["braces"] -= str(code).count("}")
                 else:
-                    raise SyntaxError(" Cannot find ending sentence of opening sentence '}'")
+                    raise SyntaxError("Cannot find ending sentence of opening sentence '}'")
             if "(" in code:
                 temps["parentheses"] = temps["parentheses"] + str(code).count("(")
             if ")" in code:
                 if temps["parentheses"] >= str(code).count(")"):
                     temps["parentheses"] -= str(code).count(")")
                 else:
-                    raise SyntaxError(" Cannot find ending sentence of opening sentence ')'")
+                    raise SyntaxError("Cannot find ending sentence of opening sentence ')'")
             if "[" in code:
                 temps["brackets"] = temps["brackets"] + str(code).count("[")
             if "]" in code:
                 if temps["brackets"] >= str(code).count("]"):
                     temps["brackets"] -= str(code).count("]")
                 else:
-                    raise SyntaxError(" Cannot find ending sentence of opening sentence ']'")
+                    raise SyntaxError("Cannot find ending sentence of opening sentence ']'")
             if ":" in code:
                 temps["colon"] += str(code).count(":")
             if code == "\\!$stop-bs":
@@ -201,7 +201,7 @@ def run(code):
                     temps["colon"] -= 1
             elif "{" not in code and "}" not in code and ":" not in code and "return" not in code and "(" not in code and ")" not in code and "[" not in code and "]" not in code:
                 if str(sys.exc_info()[1]) != "":
-                    colorlib.cprint(str(sys.exc_info()[0].__name__) +":"+ str(sys.exc_info()[1]) if sys.exc_info()[0] != JsException else str(sys.exc_info()[1]),"Red")
+                    colorlib.cprint(str(sys.exc_info()[0].__name__) +": "+ str(sys.exc_info()[1]) if sys.exc_info()[0] != JsException else str(sys.exc_info()[1]),"Red")
                 else:
                     colorlib.cprint(str(sys.exc_info()[0].__name__) if str(sys.exc_info()[0]) != JsException else str(sys.exc_info()[1]),"Red")
             elif "{" in code or "}" in code or "(" in code or ")" in code or "[" in code or "]" in code or ":" in code:
@@ -209,7 +209,7 @@ def run(code):
                     pass
                 else:
                     if str(sys.exc_info()[1]) != "":
-                        colorlib.cprint(str(sys.exc_info()[0].__name__) +":"+ str(sys.exc_info()[1]) if sys.exc_info()[0] != JsException else str(sys.exc_info()[1]),"Red")
+                        colorlib.cprint(str(sys.exc_info()[0].__name__) +": "+ str(sys.exc_info()[1]) if sys.exc_info()[0] != JsException else str(sys.exc_info()[1]),"Red")
                     else:
                         colorlib.cprint(str(sys.exc_info()[0].__name__) if str(sys.exc_info()[0]) != JsException else str(sys.exc_info()[1]),"Red")
             
@@ -270,7 +270,7 @@ if __name__ == "__main__":
                 pass
             except SyntaxError as e:
                 if str(sys.exc_info()[1]) != "":
-                    colorlib.cprint(str(sys.exc_info()[0].__name__) +":"+ str(sys.exc_info()[1]) if sys.exc_info()[0] != JsException else str(sys.exc_info()[1]),"Red")
+                    colorlib.cprint(str(sys.exc_info()[0].__name__) +": "+ str(sys.exc_info()[1]) if sys.exc_info()[0] != JsException else str(sys.exc_info()[1]),"Red")
                 else:
                     colorlib.cprint(str(sys.exc_info()[0].__name__) if str(sys.exc_info()[0]) != JsException else str(sys.exc_info()[1]),"Red")
         sys.exit(0) 

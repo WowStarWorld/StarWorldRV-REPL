@@ -1,8 +1,9 @@
 import os,sys,colorlib,platform,requests
+import datetime
+from time import sleep
 
 
-
-version = "6.7.0"
+version = "6.7.1"
 
 
 def helps():
@@ -33,8 +34,8 @@ def abouts():
 |_| \_\ \_/     \____\___/ \__,_|\___| |_|   \__,_|_|  |___/\___|_|                                   
                                                                       
 ----------------------------------------------------------------------
-Copyright © 2019-2021 StarWorld 
-        ""","Yellow")
+Copyright © 2019-${year} StarWorld 
+        """.replace("${year}",str(datetime.datetime.now().date().year)),"Yellow")
 
 
 
@@ -64,6 +65,7 @@ prototype = {
         "raw_output":sys.stdout,
     },
     "fopen":open,
+    "pass":lambda *args,**kwargs:None,
     "wrapper":{
         "pass":None,
         "range":lambda start,stop=0,step=1:list(range(int(str(start).replace("'","")),int(str(stop).replace("'","")),int(str(step).replace("'","")))),
@@ -72,5 +74,6 @@ prototype = {
         "get":lambda url,data,headers:requests.get(url=str(url).replace("'",""),data=data,headers=headers),
         "post":lambda url,data,headers:requests.post(url=str(url).replace("'",""),data=data,headers=headers),
     },
+    "setTimeout":lambda function,second:[sleep(float(str(second).replace("'",""))),function()],
 }
 
