@@ -13,7 +13,9 @@ import readline
 
 version = prototypes.version
 argv = sys.argv
-keywords = ["pyimport","break","case","catch","const","delete","else","enum","eval","extends","finally","for","function","if","in","instanceof","let","new","return","super","switch","throw","try","typeof","var","void","while","with","yield"]
+information = lambda:(colorlib.cprint(f"RV v{version} (tags/{version}) [{platform.python_compiler()}] on {platform.system()}","Yellow"),colorlib.cprint(f'Type ".help" or ".about" for more information.',"Bold Blue"))
+keywords = ["pyimport","break","case","catch","const","delete","else","continue","enum","eval","extends","finally","for","function","if","in","instanceof","let","new","return","super","switch","throw","try","typeof","var","void","while","with","yield"]
+js_exceptions = ["Error","ReferenceError","EvalError","URIError","SyntaxError","TypeError","RangeError"]
 def res_dis(file,fl=__file__):
     ic = os.path.split(os.path.realpath(fl))[ 0 ]+"/"+file
     return ic.replace("\\","/")
@@ -114,8 +116,7 @@ def run(code):
         sys.exit(0)
     elif code == ".cls":
         colorlib.consoles.clear()
-        colorlib.cprint(f"RV v{version} on {platform.platform()}","Yellow")
-        colorlib.cprint(f'Type ".help" or ".about" for more information.',"Bold Blue")
+        information()
     elif code == ".debug":
         try:
             colorlib.cprint(json.dumps(js2py.parse_js(loads),indent=2),"grey")
@@ -142,8 +143,7 @@ def run(code):
                 loads = cms
                 break
         colorlib.consoles.clear()
-        colorlib.cprint(f"RV v{version} on {platform.platform()}","Yellow")
-        colorlib.cprint(f'Type ".help" or ".about" for more information.',"Bold Blue")
+        information()
         
 
     elif code == ".load":
@@ -200,10 +200,7 @@ def run(code):
                 if temps["colon"] > 0:
                     temps["colon"] -= 1
             elif "{" not in code and "}" not in code and ":" not in code and "return" not in code and "(" not in code and ")" not in code and "[" not in code and "]" not in code:
-                if str(sys.exc_info()[1]) != "":
-                    colorlib.cprint(str(sys.exc_info()[0].__name__) +": "+ str(sys.exc_info()[1]) if sys.exc_info()[0] != JsException else str(sys.exc_info()[1]),"Red")
-                else:
-                    colorlib.cprint(str(sys.exc_info()[0].__name__) if str(sys.exc_info()[0]) != JsException else str(sys.exc_info()[1]),"Red")
+                colorlib.cprint(str(sys.exc_info()[0].__name__) +": "+ str(sys.exc_info()[1]) if sys.exc_info()[0] != JsException else str(sys.exc_info()[1]),"Red")if str(sys.exc_info()[1]) != "" else colorlib.cprint(str(sys.exc_info()[0].__name__) if str(sys.exc_info()[0]) != JsException else str(sys.exc_info()[1]),"Red")
             elif "{" in code or "}" in code or "(" in code or ")" in code or "[" in code or "]" in code or ":" in code:
                 if "Unexpected end of input" in str(e) or "list index out of range" in str(e):
                     pass
@@ -223,11 +220,11 @@ try:
     rv.libs()
     rv.stdlibs()
 except:
-    pass
+    print(__import__("traceback").format_exc())
 
 raw_input = lambda:input(str(context.eval("sys.ps1"))  if (temps["braces"]+temps["parentheses"]+temps["brackets"]+temps["colon"])==0 else str(context.eval("sys.ps2"))*(temps["braces"]+temps["parentheses"]+temps["brackets"]+temps["colon"]))
 
-CMDLocals = list(context.eval("Object.keys(this)")) + list(jsbuiltins) + keywords
+CMDLocals = list(context.eval("Object.keys(this)")) + list(jsbuiltins) + keywords + js_exceptions
 CMDLocals.remove("this")
 CMD = CMDLocals
 def completer(text, state):
@@ -242,8 +239,7 @@ readline.set_completer(completer)
 if __name__ == "__main__":
     if len(argv) == 1:
         colorlib.consoles.clear()
-        colorlib.cprint(f"RV v{version} on {platform.platform()}","Bold Yellow")
-        colorlib.cprint(f'Type ".help" or ".about" for more information.',"Bold Blue")
+        information()
         try:
             rv.libs()
             rv.stdlibs()
@@ -258,7 +254,7 @@ if __name__ == "__main__":
                     run("SyntaxError(\"Unexpected token\")")
                 else:
                     run(code)
-                CMDLocals = list(context.eval("Object.keys(this)")) + list(jsbuiltins) + keywords
+                CMDLocals = list(context.eval("Object.keys(this)")) + list(jsbuiltins) + keywords + js_exceptions
                 CMDLocals.remove("this")
                 CMD = CMDLocals
             except KeyboardInterrupt:
