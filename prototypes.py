@@ -2,7 +2,7 @@ import os,sys,colorlib,platform,requests
 
 
 
-version = "6.9.9"
+version = "6.7.0"
 
 
 def helps():

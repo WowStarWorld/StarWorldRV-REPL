@@ -71,7 +71,7 @@ class rv:
             listpl = os.listdir(res_dis("libs/"))
             for i in range(len(listpl)):
                 if os.path.isfile(res_dis("libs/"+listpl[i])):
-                    if os.path.splitext(res_dis("libs/"+listpl[i]))[1] in [".jsx","rvx"]:
+                    if os.path.splitext(res_dis("libs/"+listpl[i]))[1] in [".jsx",".rvx"]:
                         with open(res_dis("libs/"+listpl[i]),"rb") as f:
                             try:
                                 execute = lambda:context.execute(f.read().decode("UTF-8"))
@@ -130,7 +130,7 @@ def run(code):
         while True:
             try:
                 
-                command = colorlib.cinput("~ ","blue")
+                command = input("~ ")
                 if command == "\x04":
                     loads = cms
                     break
@@ -172,30 +172,60 @@ def run(code):
                 colorlib.cprint("undefined",color="bold black")
             else:
                 colorlib.cprint(__par__,"gray")
-        except:
+        except BaseException as e:
             if "{" in code:
-                temps += str(code).count("{")
+                temps["braces"] = temps["braces"] + str(code).count("{")
             if "}" in code:
-                if temps >= str(code).count("}"):
-                    temps -= str(code).count("}")
-            elif "{" not in code and "}" and ":" not in code and "return" not in code:
+                if temps["braces"] >= str(code).count("}"):
+                    temps["braces"] -= str(code).count("}")
+                else:
+                    raise SyntaxError(" Cannot find ending sentence of opening sentence '}'")
+            if "(" in code:
+                temps["parentheses"] = temps["parentheses"] + str(code).count("(")
+            if ")" in code:
+                if temps["parentheses"] >= str(code).count(")"):
+                    temps["parentheses"] -= str(code).count(")")
+                else:
+                    raise SyntaxError(" Cannot find ending sentence of opening sentence ')'")
+            if "[" in code:
+                temps["brackets"] = temps["brackets"] + str(code).count("[")
+            if "]" in code:
+                if temps["brackets"] >= str(code).count("]"):
+                    temps["brackets"] -= str(code).count("]")
+                else:
+                    raise SyntaxError(" Cannot find ending sentence of opening sentence ']'")
+            if ":" in code:
+                temps["colon"] += str(code).count(":")
+            if code == "\\!$stop-bs":
+                if temps["colon"] > 0:
+                    temps["colon"] -= 1
+            elif "{" not in code and "}" not in code and ":" not in code and "return" not in code and "(" not in code and ")" not in code and "[" not in code and "]" not in code:
                 if str(sys.exc_info()[1]) != "":
                     colorlib.cprint(str(sys.exc_info()[0].__name__) +":"+ str(sys.exc_info()[1]) if sys.exc_info()[0] != JsException else str(sys.exc_info()[1]),"Red")
                 else:
                     colorlib.cprint(str(sys.exc_info()[0].__name__) if str(sys.exc_info()[0]) != JsException else str(sys.exc_info()[1]),"Red")
+            elif "{" in code or "}" in code or "(" in code or ")" in code or "[" in code or "]" in code or ":" in code:
+                if "Unexpected end of input" in str(e) or "list index out of range" in str(e):
+                    pass
+                else:
+                    if str(sys.exc_info()[1]) != "":
+                        colorlib.cprint(str(sys.exc_info()[0].__name__) +":"+ str(sys.exc_info()[1]) if sys.exc_info()[0] != JsException else str(sys.exc_info()[1]),"Red")
+                    else:
+                        colorlib.cprint(str(sys.exc_info()[0].__name__) if str(sys.exc_info()[0]) != JsException else str(sys.exc_info()[1]),"Red")
+            
 prototypes.prototype["include"] = function.include
 prototypes.prototype["reload_modules"] = lambda: {"site-packages":rv.libs(),"standard-packages":rv.stdlibs()}
 
 context = js2py.EvalJs(prototypes.prototype)
 loads = ""
-temps = 0
+temps = {"braces":0,"parentheses":0,"colon":0,"brackets":0}
 try:
     rv.libs()
     rv.stdlibs()
 except:
     pass
 
-raw_input = lambda prompt:input(prompt if temps==0 else "..."*temps+" ")
+raw_input = lambda:input(str(context.eval("sys.ps1"))  if (temps["braces"]+temps["parentheses"]+temps["brackets"]+temps["colon"])==0 else str(context.eval("sys.ps2"))*(temps["braces"]+temps["parentheses"]+temps["brackets"]+temps["colon"]))
 
 CMDLocals = list(context.eval("Object.keys(this)")) + list(jsbuiltins) + keywords
 CMDLocals.remove("this")
@@ -221,8 +251,13 @@ if __name__ == "__main__":
             pass
         while True:
             try:
-                code = raw_input("> ")
-                run(code)
+                code = raw_input()
+                if code == "":
+                    run("\\!$stop-bs")
+                elif code == "\\!$stop-bs":
+                    run("SyntaxError(\"Unexpected token\")")
+                else:
+                    run(code)
                 CMDLocals = list(context.eval("Object.keys(this)")) + list(jsbuiltins) + keywords
                 CMDLocals.remove("this")
                 CMD = CMDLocals
@@ -233,6 +268,11 @@ if __name__ == "__main__":
                 print("\n")
             except RuntimeError:
                 pass
+            except SyntaxError as e:
+                if str(sys.exc_info()[1]) != "":
+                    colorlib.cprint(str(sys.exc_info()[0].__name__) +":"+ str(sys.exc_info()[1]) if sys.exc_info()[0] != JsException else str(sys.exc_info()[1]),"Red")
+                else:
+                    colorlib.cprint(str(sys.exc_info()[0].__name__) if str(sys.exc_info()[0]) != JsException else str(sys.exc_info()[1]),"Red")
         sys.exit(0) 
     elif len(argv) == 2:
         try:
