@@ -123,7 +123,7 @@ def run(code):
         except:
             colorlib.cprint(sys.exc_info()[1],"Red")
             colorlib.cprint("Error Code:","red")
-            colorlib.cprint(loads,"yellow")
+            colorlib.consoles.print(syntax.Syntax(loads, "javascript", theme="vim", line_numbers=True))
     elif code.strip().split(" ")[0] == ".editor":
         colorlib.consoles.clear()
         colorlib.cprint("~[/blue] // Entering editor mode (^D to finish, ^C to cancel)[blue] ","Blue")
@@ -156,7 +156,7 @@ def run(code):
                 info = str(sys.exc_info()[1])
             colorlib.cprint(info,"Red")
             colorlib.cprint("Error Code:","red")
-            colorlib.cprint(loads,"yellow")
+            colorlib.consoles.print(syntax.Syntax(loads, "javascript", theme="vim", line_numbers=True))
     elif code.strip().split(" ")[0] == ".clear":
         loads = ""
     elif code.strip().split(" ")[0] == ".show":
