@@ -165,7 +165,8 @@ def run(code):
     elif len(code) >=1 and code[0] == ".":
         colorlib.cprint("Invalid REPL Command","Red")
     else:
-        loads = loads + "\n" + code 
+        if code != "\\!$stop-bs":
+            loads = loads + "\n" + code 
         try:
             __par__ = context.eval(code)
             if str(__par__) == "None":
