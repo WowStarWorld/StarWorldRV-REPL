@@ -169,8 +169,13 @@ def run(code):
             loads = loads + "\n" + code 
         try:
             __par__ = context.eval(code)
-
-            colorlib.cprint(__par__,"gray")
+            try:
+                if __par__ == None:
+                    colorlib.cprint("undefined","italic bold black")
+                else:
+                    colorlib.cprint(__par__,"aqua")
+            except:
+                colorlib.cprint(__par__,"aqua")
         except BaseException as e:
             if "{" in code:
                 temps["braces"] = temps["braces"] + str(code).count("{")

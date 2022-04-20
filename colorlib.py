@@ -8,7 +8,19 @@ def cprint(text,color:str,end:str="\n"):
     try:
         try:
             text:JsObjectWrapper = text
-            lists = text.to_list()
+            is_list = True
+            try:
+                lists = text.to_dict()
+                for keys,values in lists.items():
+                    try:
+                        int(keys)
+                    except:
+                        is_list = False
+            except:
+                lists = text.to_list()
+                is_list = True
+            if not is_list:
+                raise Exception()
             self.print("[")
             for value in lists:    
                 if type(value) == JsObjectWrapper:
@@ -17,13 +29,20 @@ def cprint(text,color:str,end:str="\n"):
                     except:
                         pass
                 elif type(value) == type(json):
-                    self.print(f"  [bold purple]{str(value)}[/bold purple],")
+                    try:self.print(f"  [bold purple]{str(value)}[/bold purple],")
+                    except:pass
                 elif type(value) == type:
-                    self.print(f"  [blue]{str(value)}[/blue],")
+                    try:self.print(f"  [blue]{str(value)}[/blue],")
+                    except:pass
                 elif type(value) == str:
-                    self.print(f"  \'[bold yellow]{str(value)}[/bold yellow]\',")
+                    try:
+                        self.print(f"  \'[bold yellow]{str(value)}[/bold yellow]\',")
+                    except:pass
                 else:
-                    self.print(f"  {str(value)},")
+                    try:
+                        self.print(f"  {str(value)},")
+                    except:
+                        pass
             self.print("]")
         except:
             raise Exception()
@@ -39,13 +58,19 @@ def cprint(text,color:str,end:str="\n"):
                     except:
                         pass
                 elif type(value) == type(json):
-                    jsons[f"\'{key}\'"] = f"[bold purple]{str(value)}[/bold purple]"
+                    try:jsons[f"\'{key}\'"] = f"[bold purple]{str(value)}[/bold purple]"
+                    except:pass
                 elif type(value) == type:
-                    jsons[f"\"{key}\'"] = f"[blue]{str(value)}[/blue]"
+                    try:jsons[f"\"{key}\'"] = f"[blue]{str(value)}[/blue]"
+                    except:pass
                 elif type(value) == str:
-                    jsons[f"\'{key}\'"] = f"\'[bold yellow]{str(value)}[/bold yellow]\'"
+                    try:jsons[f"\'{key}\'"] = f"\'[bold yellow]{str(value)}[/bold yellow]\'"
+                    except:pass
                 else:
-                    jsons[f"\'{key}\'"] = f"{str(value)}"
+                    try:
+                        jsons[f"\'{key}\'"] = f"{str(value)}"
+                    except:
+                        pass
             if jsons == {}:
                 self.print(text)
             else:

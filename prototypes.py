@@ -3,15 +3,15 @@ import datetime
 from time import sleep
 
 
-version = "6.7.6"
+version = "6.7.7"
 def getAttributes(obj):
-    attrs_list = []
+    attrs_dict = {}
     try:
         for i in range(len(dir(obj))-1):    
                 if not dir(obj)[i].startswith("__") and dir(obj)[i] != "this" and dir(obj)[i] != "self" and dir(obj)[i] != "value":
-                    attrs_list += [getattr(obj,dir(obj)[i])]
+                    attrs_dict[dir(obj)[i]] = [getattr(obj,dir(obj)[i])]
     except:pass
-    return attrs_list
+    return attrs_dict
             
 def helps():
     colorlib.cprint("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓","yellow")
