@@ -3,7 +3,7 @@ import datetime
 from time import sleep
 
 
-version = "6.8.1"
+version = "6.8.3"
 def getAttributes(obj):
     attrs_dict = {}
     try:

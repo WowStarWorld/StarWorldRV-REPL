@@ -2,33 +2,39 @@ import rich.console
 import json
 from js2py.base import JsObjectWrapper
 
+
+
+list1 = []
 consoles = rich.console.Console()
 def cprint(text,color:str,end:str="\n"):
     self = consoles
+    global list1
     try:
         try:
             text:JsObjectWrapper = text
             is_list = True
             try:
-                lists = text.to_dict()
-                for keys,values in lists.items():
+                r = text.to_dict()
+                for keys,values in r.items():
                     try:
                         int(keys)
                     except:
                         is_list = False
             except:
-                lists = text.to_list()
-                
-                if lists == []:
+                lists1 = text.to_list()
+                if lists1 == []:
                     is_list = False
+                elif type(lists1) == dict:
+                    is_list = True
                 else:
                     is_list = True
             if not is_list:
                 raise Exception()
-            if lists == {}:
-                raise Exception()
             self.print("[")
-            for value in lists:    
+            lists1 = text.to_list()
+
+            for value in lists1:    
+            
                 if type(value) == JsObjectWrapper:
                     try:
                         self.print(f"  [bold blue]{str(value)}[/bold blue],".replace("\\'","\\\"").replace('\'',""))
@@ -43,6 +49,10 @@ def cprint(text,color:str,end:str="\n"):
                 elif type(value) == str:
                     try:
                         self.print(f"  \'[bold yellow]{str(value)}[/bold yellow]\',")
+                    except:pass
+                elif type(value) == type(None):
+                    try:
+                        self.print(f"  [italic bold black]undefined[/italic bold black],")
                     except:pass
                 else:
                     try:
@@ -71,6 +81,9 @@ def cprint(text,color:str,end:str="\n"):
                     except:pass
                 elif type(value) == str:
                     try:jsons[f"\'{key}\'"] = f"\'[bold yellow]{str(value)}[/bold yellow]\'"
+                    except:pass
+                elif type(value) == type(None):
+                    try:jsons[f"\"{key}\'"] = f"[italic bold black]undefined[/italic bold black]"
                     except:pass
                 else:
                     try:
