@@ -203,10 +203,10 @@ def run(code):
             if code == "\\!$stop-bs":
                 if temps["colon"] > 0:
                     temps["colon"] -= 1
-            elif "{" not in code and "}" not in code and ":" not in code and "return" not in code and "(" not in code and ")" not in code and "[" not in code and "]" not in code:
+            elif "{" not in code and "}" not in code and ":" not in code and "return" not in code and "(" not in code and ")" not in code and "[" not in code and "]" not in code and "," not in code:
                 colorlib.cprint(str(sys.exc_info()[0].__name__) +": "+ str(sys.exc_info()[1]) if sys.exc_info()[0] != JsException else str(sys.exc_info()[1]),"Red")if str(sys.exc_info()[1]) != "" else colorlib.cprint(str(sys.exc_info()[0].__name__) if str(sys.exc_info()[0]) != JsException else str(sys.exc_info()[1]),"Red")
-            elif "{" in code or "}" in code or "(" in code or ")" in code or "[" in code or "]" in code or ":" in code:
-                if "SyntaxError" in str(e):
+            elif "{" in code or "}" in code or "(" in code or ")" in code or "[" in code or "]" in code or ":" in code or "," in code:
+                if "SyntaxError" in str(e) or "IndexError" in str(e):
                     pass
                 else:
                     if str(sys.exc_info()[1]) != "":
