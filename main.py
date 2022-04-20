@@ -169,10 +169,8 @@ def run(code):
             loads = loads + "\n" + code 
         try:
             __par__ = context.eval(code)
-            if str(__par__) == "None":
-                colorlib.cprint("undefined",color="bold black")
-            else:
-                colorlib.cprint(__par__,"gray")
+
+            colorlib.cprint(__par__,"gray")
         except BaseException as e:
             if "{" in code:
                 temps["braces"] = temps["braces"] + str(code).count("{")
@@ -223,7 +221,7 @@ try:
 except:
     print(__import__("traceback").format_exc())
 
-raw_input = lambda:input(str(context.eval("sys.ps1"))  if (temps["braces"]+temps["parentheses"]+temps["brackets"]+temps["colon"])==0 else str(context.eval("sys.ps2"))*(temps["braces"]+temps["parentheses"]+temps["brackets"]+temps["colon"]))
+raw_input = lambda:input(str(context.eval("sys.ps1")+" ")  if (temps["braces"]+temps["parentheses"]+temps["brackets"]+temps["colon"])==0 else str(context.eval("sys.ps2"))*(temps["braces"]+temps["parentheses"]+temps["brackets"]+temps["colon"])+" ")
 
 CMDLocals = list(context.eval("Object.keys(this)")) + list(jsbuiltins) + keywords + js_exceptions
 CMDLocals.remove("this")
@@ -255,6 +253,7 @@ if __name__ == "__main__":
                     run("SyntaxError(\"Unexpected token\")")
                 else:
                     run(code)
+                
                 CMDLocals = list(context.eval("Object.keys(this)")) + list(jsbuiltins) + keywords + js_exceptions
                 CMDLocals.remove("this")
                 CMD = CMDLocals

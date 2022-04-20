@@ -3,9 +3,16 @@ import datetime
 from time import sleep
 
 
-version = "6.7.5"
-
-
+version = "6.7.6"
+def getAttributes(obj):
+    attrs_list = []
+    try:
+        for i in range(len(dir(obj))-1):    
+                if not dir(obj)[i].startswith("__") and dir(obj)[i] != "this" and dir(obj)[i] != "self" and dir(obj)[i] != "value":
+                    attrs_list += [getattr(obj,dir(obj)[i])]
+    except:pass
+    return attrs_list
+            
 def helps():
     colorlib.cprint("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓","yellow")
     colorlib.cprint("┃                 RV REPL HELP PAGE                 ┃","Yellow")
@@ -57,6 +64,9 @@ prototype = {
     "help":helps,
     "__pyimport__":__import__,
     "__python__":eval,
+    "dir":dir,
+    "modules":sys.modules,
+    "__builtins__":__builtins__,
     "__pyexec__":exec,
     "iostream":{
         "input":input,
@@ -66,14 +76,12 @@ prototype = {
     },
     "fopen":open,
     "pass":lambda *args,**kwargs:None,
-    "wrapper":{
-        "pass":None,
-        "range":lambda start,stop=0,step=1:list(range(int(str(start).replace("'","")),int(str(stop).replace("'","")),int(str(step).replace("'","")))),
-    },
+    "range":lambda start,stop=0,step=1:list(range(int(str(start).replace("'","")),int(str(stop).replace("'","")),int(str(step).replace("'","")))),
     "XMLHttpRequest":{
         "get":lambda url,data,headers:requests.get(url=str(url).replace("'",""),data=data,headers=headers),
         "post":lambda url,data,headers:requests.post(url=str(url).replace("'",""),data=data,headers=headers),
     },
     "setTimeout":lambda function,second:[sleep(float(str(second).replace("'",""))),function()],
+    "getAttributes":getAttributes,
 }
 
