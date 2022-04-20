@@ -60,7 +60,7 @@ def cprint(text,color:str,end:str="\n"):
             for key,value in dicts.items():
                 if type(value) == JsObjectWrapper:
                     try:
-                        jsons[f"\'key\'"] = f"[bold blue]{str(value)}[/bold blue]".replace("\\'","\\\"").replace('\'',"")
+                        jsons[f"\'{key}\'"] = f"[bold blue]{str(value)}[/bold blue]".replace("\\'","\\\"").replace('\'',"")
                     except:
                         pass
                 elif type(value) == type(json):
