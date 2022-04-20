@@ -198,7 +198,7 @@ def run(code):
                     temps["brackets"] -= str(code).count("]")
                 else:
                     raise SyntaxError("Cannot find ending sentence of opening sentence ']'")
-            if ":" in code:
+            if code[len(code)-1] == ":":
                 temps["colon"] += str(code).count(":")
             if code == "\\!$stop-bs":
                 if temps["colon"] > 0:

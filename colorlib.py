@@ -18,8 +18,14 @@ def cprint(text,color:str,end:str="\n"):
                         is_list = False
             except:
                 lists = text.to_list()
-                is_list = True
+                
+                if lists == []:
+                    is_list = False
+                else:
+                    is_list = True
             if not is_list:
+                raise Exception()
+            if lists == {}:
                 raise Exception()
             self.print("[")
             for value in lists:    
