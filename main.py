@@ -206,7 +206,7 @@ def run(code):
             elif "{" not in code and "}" not in code and ":" not in code and "return" not in code and "(" not in code and ")" not in code and "[" not in code and "]" not in code:
                 colorlib.cprint(str(sys.exc_info()[0].__name__) +": "+ str(sys.exc_info()[1]) if sys.exc_info()[0] != JsException else str(sys.exc_info()[1]),"Red")if str(sys.exc_info()[1]) != "" else colorlib.cprint(str(sys.exc_info()[0].__name__) if str(sys.exc_info()[0]) != JsException else str(sys.exc_info()[1]),"Red")
             elif "{" in code or "}" in code or "(" in code or ")" in code or "[" in code or "]" in code or ":" in code:
-                if "Unexpected end of input" in str(e) or "list index out of range" in str(e):
+                if "SyntaxError" in str(e):
                     pass
                 else:
                     if str(sys.exc_info()[1]) != "":
