@@ -109,24 +109,24 @@ def cprint(text,color:str,end:str="\n",indent:int=0):
             for key,value in dicts.items():
                 if type(value) == JsObjectWrapper:
                     try:
-                        self.print(f"{indents}  \'{key}\'"+":"+f"[bold blue]{str(value)}[/bold blue]".replace("\\'","\\\"").replace('\'',""))
+                        self.print(f"{indents}  \'{key}\'"+":"+f"[bold blue]{str(value)}[/bold blue],".replace("\\'","\\\"").replace('\'',""))
                     except:
                         pass
                 elif type(value) == type(json):
                     try:
-                        self.print(f"{indents}  \'{key}\'"+":"+f"[bold purple]{str(value)}[/bold purple]")
+                        self.print(f"{indents}  \'{key}\'"+":"+f"[bold purple]{str(value)}[/bold purple],")
                     except:pass
                 elif type(value) == type:
                     try:
-                        self.print(f"{indents}  \"{key}\""+":"+f"[blue]{str(value)}[/blue]")
+                        self.print(f"{indents}  \"{key}\""+":"+f"[blue]{str(value)}[/blue],")
                     except:pass
                 elif type(value) == str:
                     try:
-                        self.print(f"{indents}  \'{key}\'"+":"+f"\'[bold yellow]{str(value)}[/bold yellow]\'")
+                        self.print(f"{indents}  \'{key}\'"+":"+f"\'[bold yellow]{str(value)}[/bold yellow]\',")
                     except:pass
                 elif type(value) == type(None):
                     try:
-                        self.print(f"{indents}  \"{key}\""+":"+f"[italic bold black]undefined[/italic bold black]")
+                        self.print(f"{indents}  \"{key}\""+":"+f"[italic bold black]undefined[/italic bold black],")
                     except:pass
                 elif type(value) == list or type(value) == dict:
                     try:
@@ -138,7 +138,7 @@ def cprint(text,color:str,end:str="\n",indent:int=0):
                     except:pass
                 else:
                     try:
-                        self.print(f"{indents}  \"{key}\""+":"+f"{str(value)}")
+                        self.print(f"{indents}  \"{key}\""+":"+f"{str(value)},")
                     except:
                         pass
             print(f"{indents}"+"}")
