@@ -24,7 +24,6 @@ def cprint(text,color:str,end:str="\n",indent:int=0):
     global list1
     try:
         try:
-            text:JsObjectWrapper = text
             is_list = True
             if type(text) != list:
                 try:
@@ -56,7 +55,12 @@ def cprint(text,color:str,end:str="\n",indent:int=0):
                     raise Exception()
             if all(i is None for i in lists1) or lists1 == []:
                 raise Exception()
+            try:
+                lists1 = lists1.to_dict().values()
+            except BaseException:
+                pass
             self.print(f"{indents}[")
+            
             for value in lists1:    
                 if type(value) == JsObjectWrapper:
                     try:
@@ -81,7 +85,9 @@ def cprint(text,color:str,end:str="\n",indent:int=0):
                     try:
                         try:
                             is_infinite_loop_object(value)
-                            this(value,color,end="\n",indent=indent+2)
+                            this(value,color,end="",indent=indent+2)
+                            print(f"{indents}  ,\n")
+                                
                         except:
                             this(f"[bold red][...][/bold red],",color,indent=indent+2)
                     except:pass
@@ -95,7 +101,6 @@ def cprint(text,color:str,end:str="\n",indent:int=0):
             raise Exception()
     except:
         try:
-            text:JsObjectWrapper = text
             try:
                 dicts = text.to_dict()
             except:
@@ -132,9 +137,11 @@ def cprint(text,color:str,end:str="\n",indent:int=0):
                     try:
                         try:
                             is_infinite_loop_object(value)
-                            this(value,color,end="\n",indent=indent+2)
+                            this(value,color,end="",indent=indent+2)
+                            print(f"{indents}  ,\n")
                         except:
                             this(f"\"{key}\""+":"+f"[bold red][...][/bold red],",color,indent=indent+2)
+                            
                     except:pass
                 else:
                     try:
