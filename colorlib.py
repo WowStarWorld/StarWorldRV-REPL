@@ -34,6 +34,7 @@ def cprint(text,color:str,end:str="\n",indent:int=0):
                             int(keys)
                         except:
                             is_list = False
+                    
                 except:
                     lists1 = text.to_list()
                     if lists1 == []:
@@ -53,6 +54,8 @@ def cprint(text,color:str,end:str="\n",indent:int=0):
                     lists1 = text
                 except:
                     raise Exception()
+            if all(i is None for i in lists1) or lists1 == []:
+                raise Exception()
             self.print(f"{indents}[")
             for value in lists1:    
                 if type(value) == JsObjectWrapper:
@@ -100,6 +103,8 @@ def cprint(text,color:str,end:str="\n",indent:int=0):
                     dicts = text
                 else:
                     raise Exception()
+            if dicts == {}:
+                raise Exception()
             print(f"{indents}"+"{")
             for key,value in dicts.items():
                 if type(value) == JsObjectWrapper:
