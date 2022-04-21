@@ -3,7 +3,7 @@ import datetime
 from time import sleep
 
 
-version = "7.0.0"
+version = "7.0.1"
 def getAttributes(obj):
     attrs_dict = {}
     try:
@@ -12,6 +12,8 @@ def getAttributes(obj):
                     attrs_dict[dir(obj)[i]] = [getattr(obj,dir(obj)[i])]
     except:pass
     return attrs_dict
+
+fopen = open
             
 def helps():
     colorlib.cprint("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓","yellow")
@@ -81,8 +83,8 @@ prototype = {
         "raw_input":sys.stdin,
         "raw_output":sys.stdout,
     },
-    "fopen":open,
     "pass":lambda *args,**kwargs:None,
+    "fopen":fopen,
     "range":lambda start,stop=0,step=1:list(range(int(str(start).replace("'","")),int(str(stop).replace("'","")),int(str(step).replace("'","")))),
     "XMLHttpRequest":{
         "get":lambda url,data,headers:requests.get(url=str(url).replace("'",""),data=data,headers=headers),

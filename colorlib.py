@@ -137,6 +137,7 @@ def cprint(text,color:str,end:str="\n",indent:int=0):
                     try:
                         try:
                             is_infinite_loop_object(value)
+                            self.print(f"{indents}  \"{key}\""+":",end="")
                             this(value,color,end="",indent=indent+2)
                             print(f"{indents}  ,\n")
                         except:
