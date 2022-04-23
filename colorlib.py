@@ -75,7 +75,10 @@ def cprint(text,color:str,end:str="\n",indent:int=0):
                     except:pass
                 elif type(value) == str:
                     try:
-                        self.print(f"{indents}  \'[bold yellow]{str(value)}[/bold yellow]\',")
+                        if value[-1] == "\\":
+                            self.print(f"{indents}  \'[bold yellow]{str(value)}"+" "+"[/bold yellow]\',")
+                        else:
+                            self.print(f"{indents}  \'[bold yellow]{str(value)}[/bold yellow]\',")
                     except:pass
                 elif type(value) == type(None):
                     try:
@@ -125,9 +128,13 @@ def cprint(text,color:str,end:str="\n",indent:int=0):
                     try:
                         self.print(f"{indents}  \"{key}\""+":"+f"[blue]{str(value)}[/blue],")
                     except:pass
+                
                 elif type(value) == str:
                     try:
-                        self.print(f"{indents}  \'{key}\'"+":"+f"\'[bold yellow]{str(value)}[/bold yellow]\',")
+                        if value[-1] == "\\":
+                            self.print(f"{indents}  \'{key}\'"+":"+f"\'[bold yellow]{str(text)}"+" "+"[/bold yellow]\',")
+                        else:
+                            self.print(f"{indents}  \'{key}\'"+":"+f"\'[bold yellow]{str(value)}[/bold yellow]\',")
                     except:pass
                 elif type(value) == type(None):
                     try:
@@ -151,7 +158,10 @@ def cprint(text,color:str,end:str="\n",indent:int=0):
                         pass
             print(f"{indents}"+"}")
         except :
-            self.print(f"{indents}[{color.lower()}]{text}[/{color.lower()}]",end=end)
+            if text[-1] == "\\":
+                print(text)
+            else:
+                self.print(f"{indents}[{color.lower()}]{text}[/{color.lower()}]",end=end)
 def cinput(text:str,color:str):
     self = consoles
     return self.input(f"[{color.lower()}]{text}[/{color.lower()}]")

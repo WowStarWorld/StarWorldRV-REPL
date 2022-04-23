@@ -3,7 +3,7 @@ import datetime
 from time import sleep
 
 
-version = "7.0.2"
+version = "7.0.3"
 def getAttributes(obj):
     attrs_dict = {}
     try:
@@ -13,6 +13,7 @@ def getAttributes(obj):
     except:pass
     return attrs_dict
 
+    
 fopen = open
             
 def helps():
@@ -77,6 +78,8 @@ prototype = {
     "modules":sys.modules,
     "__builtins__":__builtins__,
     "__pyexec__":exec,
+    "chr":lambda x:chr(int(str(x).replace("'",""))),
+    "ord":lambda x:ord(str(x.to_string())[1]),
     "iostream":{
         "input":input,
         "output":print,
