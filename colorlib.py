@@ -158,8 +158,8 @@ def cprint(text,color:str,end:str="\n",indent:int=0):
                         pass
             print(f"{indents}"+"}")
         except :
-            if text[-1] == "\\":
-                print(text)
+            if str(text)[-1] == "\\":
+                self.print(f"{indents}[{color.lower()}]{text}"+" "+f"[/{color.lower()}]",end=end)
             else:
                 self.print(f"{indents}[{color.lower()}]{text}[/{color.lower()}]",end=end)
 def cinput(text:str,color:str):

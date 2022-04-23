@@ -3,7 +3,7 @@ import datetime
 from time import sleep
 
 
-version = "7.0.3"
+version = "7.0.4"
 def getAttributes(obj):
     attrs_dict = {}
     try:
@@ -15,7 +15,7 @@ def getAttributes(obj):
 
     
 fopen = open
-            
+
 def helps():
     colorlib.cprint("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓","yellow")
     colorlib.cprint("┃                 RV REPL HELP PAGE                 ┃","Yellow")
