@@ -251,7 +251,10 @@ if __name__ == "__main__":
             pass
         while True:
             try:
-                code = raw_input()
+                try:
+                    code = raw_input()
+                except:
+                    exit()
                 if code == "":
                     run("\\!$stop-bs")
                 elif code == "\\!$stop-bs":
