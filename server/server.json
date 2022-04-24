@@ -1,0 +1,11 @@
+{
+    "javascript":"index.jsx",
+    "headers":[
+        ["Content-type","text/html; charset=utf-8"]
+    ],
+    "ip":"localhost",
+    "port":"80",
+    "errors":{
+        "404":"\n    <html>\n    <head>\n    <title>404 Not Found</title>\n    <link rel=\"stylesheet\" href=\"https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css\">\n    <script src=\"https://cdn.staticfile.org/popper.js/2.9.3/umd/popper.min.js\"></script>\n    <script src=\"https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.min.js\"></script>\n    </head>\n    <body style=\"display: -webkit-box;display: flex;-webkit-box-orient: horizontal;-webkit-box-direction: normal;flex-flow: row wrap;align-content: center;-webkit-box-pack: center;justify-content: center;\">\n    <br/><br/>\n    <center>\n    <div class=container>\n    <h1 class=\"text-warning\">404 Not Found</h1>\n    <hr>\n    <h4 class=\"text-primary\">RV</h4>\n    <br/><br/><br/>\n    <div class=\"btn-group\" role=\"group\" aria-label=\"Basic outlined example\">\n        <button type=\"button\" class=\"btn btn-outline-success\" onclick=\"history.back();\">Back</button>\n        <button type=\"button\" class=\"btn btn-outline-success\" onclick=\"location.reload();\">Reload</button>\n        <button type=\"button\" class=\"btn btn-outline-success\" onclick=\"location='/';\">Home</button>\n    </div>\n    </div>\n    </center>\n    </body>\n    </html>\n    "
+    }
+}
