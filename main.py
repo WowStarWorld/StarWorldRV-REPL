@@ -36,6 +36,22 @@ class function:
                 "error_message":str(e),
                 "error_type":e.__class__,
             }
+    def require(lib):
+        try:
+            context.execute(open(res_dis(str(lib).replace("'",""),str(context.eval("__file__")).replace("'","")),"rb").read().decode('utf-8'))
+            return {
+                "error":False,
+                "error_name":"Not Found",
+                "error_message":"Not Found",
+                "error_type":Exception,
+            }
+        except BaseException as e:
+            return {
+                "error":True,
+                "error_name":e.__class__.__name__,
+                "error_message":str(e),
+                "error_type":e.__class__,
+            }
 
 class rv:
     global prototypes
@@ -217,6 +233,8 @@ def run(code):
 prototypes.prototype["include"] = function.include
 prototypes.prototype["reload_modules"] = lambda: {"site-packages":rv.libs(),"standard-packages":rv.stdlibs()}
 prototypes.prototype['argv'] = sys.argv
+prototypes.prototype['require'] = function.require
+prototypes.prototype['__file__'] = __file__
 
 context = js2py.EvalJs(prototypes.prototype)
 loads = ""
@@ -291,7 +309,7 @@ if __name__ == "__main__":
             if argv[1] != "#temp" :
                 with open(argv[1],"rb") as f:
                     codes = f.read().decode("utf-8")
-                    context.execute(codes)
+                    context.execute(f"__file__=\"{argv[1]}\"\n{codes}")
             context.execute(argv[2])
         except:
             colorlib.cprint(sys.exc_info()[1],"Red")
@@ -314,6 +332,7 @@ if __name__ == "__main__":
                 pass
             with open(argv[1],"rb") as f:
                 codes = f.read().decode("utf-8")
-                context.execute(codes)
+                
+                context.execute(f"__file__=\"{argv[1]}\"\n{codes}")
         except:
             colorlib.cprint(sys.exc_info()[1],"Red")
