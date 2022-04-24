@@ -32,7 +32,6 @@ def run(self,files):
                 elif files[i].lstrip().rstrip() == "?>":
                     head = 0
                     context.execute(fl)
-                    #fl = ""
                 elif head == 0:
                     print(files[i])
                 elif head == 1:
