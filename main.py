@@ -231,10 +231,11 @@ def run(code):
                         colorlib.cprint(str(sys.exc_info()[0].__name__) if str(sys.exc_info()[0]) != JsException else str(sys.exc_info()[1]),"Red")
             
 prototypes.prototype["include"] = function.include
-prototypes.prototype["reload_modules"] = lambda: {"site-packages":rv.libs(),"standard-packages":rv.stdlibs()}
+prototypes.prototype["reload_modules"] = lambda: {"site-packages":rv.libs(),"standard-packages":rv.stdlibs(),"path":res_dis('')}
 prototypes.prototype['argv'] = sys.argv
 prototypes.prototype['require'] = function.require
 prototypes.prototype['__file__'] = __file__
+prototypes.prototype['__modulepath__'] = res_dis('')
 
 context = js2py.EvalJs(prototypes.prototype)
 loads = ""
@@ -275,7 +276,8 @@ if __name__ == "__main__":
                 try:
                     code = raw_input()
                 except:
-                    exit()
+                    colorlib.cprint(__import__("traceback").format_exc(),"red")
+                    sys.exit(0)
                 if code == "":
                     run("\\!$stop-bs")
                 elif code == "\\!$stop-bs":
@@ -300,6 +302,10 @@ if __name__ == "__main__":
                     colorlib.cprint(str(sys.exc_info()[0].__name__) if str(sys.exc_info()[0]) != JsException else str(sys.exc_info()[1]),"Red")
         sys.exit(0) 
     elif len(argv) >= 3:
+        if (argv[1] == "--packages" or argv[1] == "-p"):
+            import pip
+            pip.main(argv[2:])
+            sys.exit(0)
         try:
             try:
                 rv.libs()
@@ -314,10 +320,7 @@ if __name__ == "__main__":
         except:
             colorlib.cprint(sys.exc_info()[1],"Red")
     elif len(argv) > 1:
-        if (argv[1] == "--packages" or argv[1] == "-p"):
-            import pip
-            pip.main(argv[2:])
-            sys.exit(0)
+        
         if argv[1] == "--help" or argv[1] == "-h" or argv[1] == "/?":
             colorlib.cprint("Usage <*Command> [*Arguements]","Bold Yellow")
             colorlib.cprint("  --help[-h,/?]                : Show this help","Bold Yellow")

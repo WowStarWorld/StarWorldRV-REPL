@@ -4,7 +4,7 @@ import func
 from time import sleep
 
 
-version = "7.0.9"
+version = "7.1.1"
 def getAttributes(obj):
     attrs_dict = {}
     try:
@@ -69,6 +69,10 @@ prototype = {
         "#document":colorlib.consoles,
     },
     "print":print,
+    "sys":{
+        "ps1":">",
+        "ps2":"...",
+    },
     "system":os.system,
     "about":abouts,
     "help":helps,
