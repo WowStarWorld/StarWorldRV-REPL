@@ -216,15 +216,16 @@ def run(code):
             
 prototypes.prototype["include"] = function.include
 prototypes.prototype["reload_modules"] = lambda: {"site-packages":rv.libs(),"standard-packages":rv.stdlibs()}
+prototypes.prototype['argv'] = sys.argv
 
 context = js2py.EvalJs(prototypes.prototype)
 loads = ""
 temps = {"braces":0,"parentheses":0,"colon":0,"brackets":0}
-try:
-    rv.libs()
-    rv.stdlibs()
-except:
-    print(__import__("traceback").format_exc())
+
+
+rv.libs()
+rv.stdlibs()
+
 
 raw_input = lambda:input(str(context.eval("sys.ps1")+" ")  if (temps["braces"]+temps["parentheses"]+temps["brackets"]+temps["colon"])==0 else str(context.eval("sys.ps2"))*(temps["braces"]+temps["parentheses"]+temps["brackets"]+temps["colon"])+" ")
 
@@ -241,7 +242,9 @@ readline.parse_and_bind("tab: complete")
 readline.set_completer(completer)
 
 if __name__ == "__main__":
+        
     if len(argv) == 1:
+        
         colorlib.consoles.clear()
         information()
         try:
@@ -279,6 +282,16 @@ if __name__ == "__main__":
                     colorlib.cprint(str(sys.exc_info()[0].__name__) if str(sys.exc_info()[0]) != JsException else str(sys.exc_info()[1]),"Red")
         sys.exit(0) 
     elif len(argv) == 2:
+        if (argv[1] == "--packages" or argv[1] == "-p"):
+            import pip
+            pip.main(argv[2:])
+            sys.exit(0)
+        if argv[1] == "--help" or argv[1] == "-h" or argv[1] == "/?":
+            colorlib.cprint("Usage <*Command> [*Arguements]","Bold Yellow")
+            colorlib.cprint("  --help[-h,/?]                : Show this help","Bold Yellow")
+            colorlib.cprint("  --packages[-p] <args>        : Package Manager","Bold Yellow")
+            colorlib.cprint("  (File) <*args/#temps=NoArgs> : Run RV File with *arguments","Bold Yellow")
+            sys.exit(0)
         try:
             try:
                 rv.libs()
@@ -304,3 +317,4 @@ if __name__ == "__main__":
             run(argv[2])
         except:
             colorlib.cprint(sys.exc_info()[1],"Red")
+            
