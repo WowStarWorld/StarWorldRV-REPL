@@ -281,7 +281,21 @@ if __name__ == "__main__":
                 else:
                     colorlib.cprint(str(sys.exc_info()[0].__name__) if str(sys.exc_info()[0]) != JsException else str(sys.exc_info()[1]),"Red")
         sys.exit(0) 
-    elif len(argv) == 2:
+    elif len(argv) >= 3:
+        try:
+            try:
+                rv.libs()
+                rv.stdlibs()
+            except:
+                pass
+            if argv[1] != "#temp" :
+                with open(argv[1],"rb") as f:
+                    codes = f.read().decode("utf-8")
+                    context.execute(codes)
+            context.execute(argv[2])
+        except:
+            colorlib.cprint(sys.exc_info()[1],"Red")
+    elif len(argv) > 1:
         if (argv[1] == "--packages" or argv[1] == "-p"):
             import pip
             pip.main(argv[2:])
@@ -290,7 +304,7 @@ if __name__ == "__main__":
             colorlib.cprint("Usage <*Command> [*Arguements]","Bold Yellow")
             colorlib.cprint("  --help[-h,/?]                : Show this help","Bold Yellow")
             colorlib.cprint("  --packages[-p] <args>        : Package Manager","Bold Yellow")
-            colorlib.cprint("  (File) <*args/#temps=NoArgs> : Run RV File with *arguments","Bold Yellow")
+            colorlib.cprint("  (File/#temps) <*args> : Run RV File with *arguments","Bold Yellow")
             sys.exit(0)
         try:
             try:
@@ -303,18 +317,3 @@ if __name__ == "__main__":
                 context.execute(codes)
         except:
             colorlib.cprint(sys.exc_info()[1],"Red")
-    elif len(argv) == 3:
-        try:
-            try:
-                rv.libs()
-                rv.stdlibs()
-            except:
-                pass
-            if argv[1] != "#temp" :
-                with open(argv[1],"rb") as f:
-                    codes = f.read().decode("utf-8")
-                    context.execute(codes)
-            run(argv[2])
-        except:
-            colorlib.cprint(sys.exc_info()[1],"Red")
-            
