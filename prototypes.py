@@ -1,9 +1,10 @@
 import os,sys,colorlib,platform,requests
 import datetime
+import func
 from time import sleep
 
 
-version = "7.0.8"
+version = "7.0.9"
 def getAttributes(obj):
     attrs_dict = {}
     try:
@@ -15,7 +16,6 @@ def getAttributes(obj):
 
     
 fopen = open
-
 def helps():
     colorlib.cprint("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓","yellow")
     colorlib.cprint("┃                 RV REPL HELP PAGE                 ┃","Yellow")
@@ -95,5 +95,5 @@ prototype = {
     },
     "setTimeout":lambda function,second:[sleep(float(str(second).replace("'",""))),function()],
     "getAttributes":getAttributes,
+    "$":func.selector,
 }
-
