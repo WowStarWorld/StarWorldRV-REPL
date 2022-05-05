@@ -1,7 +1,6 @@
 import os,sys
 from js2py.internals.simplex import JsException
 from js2py.pyjs import builtins as jsbuiltins
-import platform
 import json
 import js2py
 import requests
@@ -10,11 +9,12 @@ import colorlib
 import threading
 from rich import syntax
 import readline
-
+from prototypes import information
+sys.stderr = lambda *args: None
 version = prototypes.version
 argv = sys.argv
-information = lambda:(colorlib.cprint(f"RV v{version} (tags/{version}) [{platform.python_compiler()}] on {platform.system()}","Yellow"),colorlib.cprint(f'Type ".help" or ".about" for more information.',"Bold Blue"))
-keywords = ["pyimport","break","case","catch","const","delete","else","continue","enum","eval","extends","finally","for","function","if","in","instanceof","let","new","return","super","switch","throw","try","typeof","var","void","while","with","yield"]
+
+keywords = ["pyimport","break","case","catch","const","delete","else","continue","enum","eval","extends","finally","for","function","if","in","instanceof","let","new","return","super","switch","throw","try","typeof","var","void","while","with","yield","debugger"]
 js_exceptions = ["Error","ReferenceError","EvalError","URIError","SyntaxError","TypeError","RangeError"]
 def res_dis(file,fl=__file__):
     ic = os.path.split(os.path.realpath(fl))[ 0 ]+"/"+file
@@ -175,6 +175,7 @@ def run(code):
             colorlib.consoles.print(syntax.Syntax(loads, "javascript", theme="vim", line_numbers=True))
     elif code.strip().split(" ")[0] == ".clear":
         loads = ""
+        temps = {"braces":0,"parentheses":0,"colon":0,"brackets":0}
     elif code.strip().split(" ")[0] == ".show":
         colorlib.consoles.print(syntax.Syntax(loads, "javascript", theme="vim", line_numbers=True))
         
@@ -276,7 +277,6 @@ if __name__ == "__main__":
                 try:
                     code = raw_input()
                 except:
-                    colorlib.cprint(__import__("traceback").format_exc(),"red")
                     sys.exit(0)
                 if code == "":
                     run("\\!$stop-bs")

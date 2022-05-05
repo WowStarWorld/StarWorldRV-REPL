@@ -2,9 +2,9 @@ import os,sys,colorlib,platform,requests
 import datetime
 import func
 from time import sleep
+information = lambda:(colorlib.cprint(f"RV v{version} (tags/{version}) [{platform.python_compiler()}] on {platform.system()}","Yellow"),colorlib.cprint(f'Type ".help" or ".about" for more information.',"Bold Blue"))
 
-
-version = "7.1.1"
+version = "7.1.2"
 def getAttributes(obj):
     attrs_dict = {}
     try:

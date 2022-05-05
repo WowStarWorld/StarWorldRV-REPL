@@ -1,4 +1,5 @@
 import hashlib
+import rich
 
 class selector:
     __module__ = "builtins"
@@ -23,3 +24,4 @@ class selector:
         return ['getSelector']
     def __del__(self):
         del self
+
